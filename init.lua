@@ -1,0 +1,6 @@
+require('base/search')
+require('base/tabs')
+require('keys/main')
+require('base/other')
+require('base/gui')
+require('plugins/packer_install')
