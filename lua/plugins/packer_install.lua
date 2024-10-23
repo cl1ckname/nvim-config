@@ -76,14 +76,6 @@ return require('packer').startup(function(use)
 		--'marko-cerovac/material.nvim'
 	}
 
-	-- use {
-	-- 	'preservim/nerdtree',
-	-- 	requires = { 'tiagofumo/vim-nerdtree-syntax-highlight' },
-	-- 	config = function()
-	-- 		require("plugins/nerdtree")
-	-- 	end
-	-- }
-
 	use {
 		'nvim-neo-tree/neo-tree.nvim',
 		branch = "v3.x",
@@ -191,11 +183,10 @@ return require('packer').startup(function(use)
 			require('plugins/gitsigns')
 		end
 	}
-	use {
-		"ThePrimeagen/refactoring.nvim",
-		requires = {
-			{ "nvim-lua/plenary.nvim" },
-			{ "nvim-treesitter/nvim-treesitter" }
-		}
-	}
+	use({
+		"dnlhc/glance.nvim",
+		config = function()
+			require('plugins/glance')
+		end,
+	})
 end)
