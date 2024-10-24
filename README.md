@@ -1,4 +1,19 @@
+<div align="center">
+    <p>
+<a>
+    <img alt="Linux" src="https://img.shields.io/badge/Linux-%23.svg?style=flat-square&logo=linux&color=FCC624&logoColor=black" />
+</a>
+<a href="https://github.com/neovim/neovim/releases/tag/stable">
+      <img src="https://img.shields.io/badge/Neovim-0.10.2-blueviolet.svg?style=flat-square&logo=Neovim&logoColor=green" alt="Neovim minimum version"/>
+    </a>
+ <a>
+      <img src="https://img.shields.io/github/repo-size/cl1ckname/nvim-config?style=flat-square" />
+    </a>
+</p>
+</div>
+
 # My NeoVim configuration to develop with Golang
+
 This is my daily Lua based config to write code. Kinda a little IDE. I was collected it step by step including only required required for me minimum. The idea of this build is to create a pretty fast toolkit to use it as main code editor via TMux and other TUI tools. Feel free to fork it or write any suggestions and advices.
 <br>
 When designing this repository, I was guided by [magidc/nvim-config](https://github.com/magidc/nvim-config). Check it out too!
