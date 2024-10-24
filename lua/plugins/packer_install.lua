@@ -189,4 +189,16 @@ return require('packer').startup(function(use)
 			require('plugins/glance')
 		end,
 	})
+	use {
+		'jdhao/better-escape.vim',
+		event = 'InsertEnter',
+	}
+	use {
+		'nvimdev/dashboard-nvim',
+		event = 'VimEnter',
+		config = function()
+			require('plugins/dashboard')
+		end,
+		requires = { 'nvim-tree/nvim-web-devicons' }
+	}
 end)

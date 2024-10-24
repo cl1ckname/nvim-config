@@ -18,7 +18,7 @@ line.setup({
     component_separators = { left = '', right = ''},
     section_separators = { left = '', right = ''},
     disabled_filetypes = {
-      statusline = {'nerdtree', 'packer'},
+      statusline = {'nerdtree', 'packer', 'neo-tree', 'dashboard'},
       winbar = {},
     },
     ignore_focus = {},

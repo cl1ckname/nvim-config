@@ -10,5 +10,8 @@ nm('<leader>tf', ':GoTest -f<CR>')
 nm('<leader>tp', ':GoTest -p<CR>')
 nm('<C-L>', ':GoImports<CR>')
 
-nm('<leader>vc', ':Gitsigns preview_hunk<CR>')
-nm('<leader>vd', ':Gitsigns toggle_deleted<CR>')
+nm('<space>vc', ':Gitsigns preview_hunk<CR>')
+nm('<space>vd', ':Gitsigns toggle_deleted<CR>')
+
+nm('<space>gd', '<cmd>Glance defenitions<cr>')
+nm('<space>gr', '<cmd>Glance references<cr>')
