@@ -39,14 +39,28 @@ local on_attach = function(client, bufnr)
       hi LspReferenceRead cterm=bold ctermbg=DarkMagenta guibg=LightYellow
       hi LspReferenceText cterm=bold ctermbg=DarkMagenta guibg=LightYellow
       hi LspReferenceWrite cterm=bold ctermbg=DarkMagenta guibg=LightYellow
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
     ]], false)
 	--end
 end
+
+lsp.yamlls.setup {
+	{ "yaml", "yaml.docker-compose", "yaml.gitlab", "yml" },
+	on_attach = function(client, bufnr)
+		client.server_capabilities.documentFormattingProvider = true
+		on_attach(client, bufnr)
+	end,
+	capabilities = capabilities,
+	settings = {
+		yaml = {
+			format = {
+				enable = true
+			},
+			schemaStore = {
+				enable = true
+			}
+		}
+	},
+}
 
 lsp.gopls.setup({
 	cmd = { 'gopls' },
@@ -103,5 +117,6 @@ lsp.lua_ls.setup {
 	end,
 	settings = {
 		Lua = {}
-	}
+	},
+	on_attach = on_attach,
 }
