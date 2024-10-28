@@ -31,6 +31,19 @@ cmp.setup {
 
 		-- Вызов меню автодополнения
 		['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+		['<C-g>'] = cmp.mapping.complete({ config = {
+			sources = {
+				{ name = 'luasnip' },
+			},
+			snippet = {
+
+				-- REQUIRED - you must specify a snippet engine
+				expand = function(args)
+					luasnip.lsp_expand(args.body) -- Luasnip expand
+				end,
+			},
+
+		}}, {'i'}),
 		['<CR>'] = cmp.mapping.confirm({ select = true }), -- Я не люблю, когда вещи автодополняются на <Enter>
 		-- Используем <C-e> для того чтобы прервать автодополнение
 		['<C-e>'] = cmp.mapping({
@@ -48,6 +61,26 @@ cmp.setup {
 				fallback()
 			end
 		end),
+		['<Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+            elseif luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+            -- elseif has_words_before() then
+            --     cmp.complete()
+            else
+                fallback()
+            end
+        end, { 'i', 's' }),
+        ['<S-Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+            elseif luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+            else
+                fallback()
+            end
+        end, { 'i', 's' }),
 	},
 
 	sources = cmp.config.sources({
@@ -71,3 +104,15 @@ cmp.setup {
 		})
 	}
 }
+
+-- Use buffer source for `/` & `?`.
+cmp.setup.cmdline({ "/", "?" }, {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = { { name = "buffer" } },
+})
+
+-- Use cmdline & path source for ':'.
+-- cmp.setup.cmdline(":", {
+-- 	mapping = cmp.mapping.preset.cmdline(),
+-- 	sources = { { name = "path" }, { name = "cmdline" } },
+-- })
