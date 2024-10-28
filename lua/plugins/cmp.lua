@@ -1,6 +1,7 @@
 local _cmp, cmp = pcall(require, "cmp")
 local _luasnip, luasnip = pcall(require, "luasnip")
 local _lspkind, lspkind = pcall(require, "lspkind")
+local types = require('cmp.types')
 
 if not _cmp or not _lspkind or not _luasnip then
 	return
@@ -43,7 +44,7 @@ cmp.setup {
 				end,
 			},
 
-		}}, {'i'}),
+		} }, { 'i' }),
 		['<CR>'] = cmp.mapping.confirm({ select = true }), -- Я не люблю, когда вещи автодополняются на <Enter>
 		-- Используем <C-e> для того чтобы прервать автодополнение
 		['<C-e>'] = cmp.mapping({
@@ -62,33 +63,43 @@ cmp.setup {
 			end
 		end),
 		['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-            elseif luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
-            -- elseif has_words_before() then
-            --     cmp.complete()
-            else
-                fallback()
-            end
-        end, { 'i', 's' }),
-        ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
-            elseif luasnip.jumpable(-1) then
-                luasnip.jump(-1)
-            else
-                fallback()
-            end
-        end, { 'i', 's' }),
+			if cmp.visible() then
+				cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+			elseif luasnip.expand_or_jumpable() then
+				luasnip.expand_or_jump()
+				-- elseif has_words_before() then
+				--     cmp.complete()
+			else
+				fallback()
+			end
+		end, { 'i', 's' }),
+		['<S-Tab>'] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+			elseif luasnip.jumpable(-1) then
+				luasnip.jump(-1)
+			else
+				fallback()
+			end
+		end, { 'i', 's' }),
 	},
 
 	sources = cmp.config.sources({
-		{ name = 'nvim_lsp',               keyword_length = 140, }, -- LSP 👄
-		{ name = 'nvim_lsp_signature_help' },                 -- Помощь при введении параметров в методах 🚁
-		{ name = 'luasnip' },                                 -- Luasnip 🐌
-		{ name = 'path' },                                    -- Пути 🪤
-		{ name = "emoji" },                                   -- Эмодзи 😳
+		{ name = 'nvim_lsp',
+			keyword_length = 140,
+			entry_filter = function(entry, ctx)
+				local kind = types.lsp.CompletionItemKind[entry:get_kind()]
+
+				if kind == "Text" then return false end
+				return true
+			end,
+		},                              -- LSP 👄
+		{ name = 'nvim_lsp_signature_help' }, -- Помощь при введении параметров в методах 🚁
+		{ name = 'luasnip' },           -- Luasnip 🐌
+		{ name = 'nvim_lua' },
+		-- { name = 'neodev' },
+		-- { name = 'path' }, -- Пути 🪤
+		-- { name = "emoji" }, -- Эмодзи 😳
 		-- { name = 'buffer' },                    -- Буфферы 🐃
 	}, {
 	}),

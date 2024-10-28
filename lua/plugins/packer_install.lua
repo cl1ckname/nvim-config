@@ -55,8 +55,13 @@ return require('packer').startup(function(use)
 		config = function()
 			require("plugins/cmp")
 		end,
-		requires = { "hrsh7th/cmp-nvim-lsp" }
+		requires = {
+			"hrsh7th/cmp-nvim-lsp",
+		}
 	})
+
+	use({ "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" })
+
 	use("onsails/lspkind-nvim")
 
 	use({ "hrsh7th/cmp-path", after = "nvim-cmp" })
