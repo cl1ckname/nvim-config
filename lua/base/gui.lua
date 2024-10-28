@@ -1,3 +1,3 @@
-vim.opt.guicursor = "i:hor50-Cursor-blinkwait300-blinkon200-blinkoff150"
+vim.opt.guicursor = "i:ver100-iCursor-blinkwait300-blinkon200-blinkoff150"
 vim.opt.cursorline = true
 
