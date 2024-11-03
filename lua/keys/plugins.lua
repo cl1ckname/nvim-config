@@ -18,3 +18,5 @@ nm('<space>gr', '<cmd>Glance references<cr>')
 
 im('<leader>se', '<cmd>EmojiInsert<cr>')
 im('<leader>sk', '<cmd>KaomojiInsertByGroup<cr>')
+
+-- nm('<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')

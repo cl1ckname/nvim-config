@@ -20,3 +20,7 @@ end
 vim.keymap.set("t", "<C-t>", exitTerm)
 nm('<C-t>', ':ToggleTerm direction=float<CR>')
 nm('gf', ':lua vim.lsp.buf.format()<CR>')
+
+nm('G', 'Gzz')
+nm('}', '}zz')
+nm('{', '{zz')

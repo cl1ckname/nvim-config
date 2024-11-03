@@ -28,6 +28,7 @@ local on_attach = function(client, bufnr)
 	buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
 	buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
 	buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()()<CR>', opts)
+	buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
 
 	-- Set some keybinds conditional on server capabilities
 	buf_set_keymap("n", "ff", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
@@ -92,7 +93,10 @@ lsp.gopls.setup({
 			["ui.inlayhint.hints"] = {
 				compositeLiteralFields = true,
 				constantValues = true,
-				parameterNames = true
+				parameterNames = true,
+				functionTypeParameters = true,
+				compositeLiteralTypes = true,
+				assignVariableTypes = true,
 			},
 		},
 	},
