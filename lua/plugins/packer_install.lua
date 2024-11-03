@@ -210,4 +210,17 @@ return require('packer').startup(function(use)
 		end,
 		requires = { 'nvim-tree/nvim-web-devicons' }
 	}
+	use {
+		'stevearc/dressing.nvim',
+		config = function()
+			require("plugins/dressing")
+		end
+	}
+	use {
+		'Allaman/emoji.nvim',
+		config = function()
+			require('plugins/emoji')
+		end,
+		after = { "nvim-cmp", "telescope.nvim", "dressing.nvim" }
+	}
 end)

@@ -16,8 +16,5 @@ nm('<space>vd', ':Gitsigns toggle_deleted<CR>')
 nm('<space>gd', '<cmd>Glance defenitions<cr>')
 nm('<space>gr', '<cmd>Glance references<cr>')
 
--- vim.api.nvim_create_autocmd({ "TermEnter" }, {
--- 	callback = function()
--- 		vim.cmd('startinsert')
--- 	end
--- })
+im('<leader>se', '<cmd>EmojiInsert<cr>')
+im('<leader>sk', '<cmd>KaomojiInsertByGroup<cr>')
