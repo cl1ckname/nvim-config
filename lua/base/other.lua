@@ -46,3 +46,5 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 opt.exrc = true
+
+vim.g.mapleaderkey = '<space>'
