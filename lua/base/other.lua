@@ -1,5 +1,5 @@
 local opt = vim.opt
---[[ Настройка панелей ]]--
+--[[ Настройка панелей ]] --
 -- Вертикальные сплиты становятся справа
 -- По умолчанию панели в Neovim ставятся в зависимости от расположения текущей панели. Данная настройка поможет нам держать панели в порядке
 opt.splitright = true
@@ -7,7 +7,7 @@ opt.splitright = true
 -- Горизонтальные сплиты становятся снизу
 opt.splitbelow = true
 
---[[ Дополнительные настройки ]]--
+--[[ Дополнительные настройки ]] --
 -- Используем системный буфер обмена
 opt.clipboard = 'unnamedplus'
 
@@ -38,13 +38,14 @@ vim.cmd([[
 
 local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
 vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*.go",
-  callback = function()
-   require('go.format').goimports()
-  end,
-  group = format_sync_grp,
+	pattern = "*.go",
+	callback = function()
+		require('go.format').goimports()
+	end,
+	group = format_sync_grp,
 })
 vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 opt.exrc = true
 
-vim.g.mapleaderkey = '<space>'
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '

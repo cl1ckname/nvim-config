@@ -63,20 +63,7 @@ lsp.yamlls.setup {
 	},
 }
 
--- waiting for the best times
--- lsp.buf = {
--- 	default_config = {
--- 		cmd = { "buf", "beta", "lsp" },
--- 		root_dir = vim.fn.getcwd(),
--- 		capabilities = capabilities,
--- 		on_attach = function(client, buffer)
---
--- 			on_attach()
--- 		end,
--- 		filetypes = { "proto" },
--- 		single_file_support = true,
--- 	},
--- }
+lsp.buf_ls.setup {}
 
 lsp.gopls.setup({
 	cmd = { 'gopls' },
