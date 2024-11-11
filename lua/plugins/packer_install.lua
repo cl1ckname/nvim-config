@@ -158,20 +158,11 @@ return require('packer').startup(function(use)
 			"nvim-neotest/nvim-nio",
 			"nvim-lua/plenary.nvim",
 			"antoinemadec/FixCursorHold.nvim",
-			"nvim-treesitter/nvim-treesitter"
-		}
-	}
-	use {
-		"fredrikaverpil/neotest-golang",
-		requires = {
-			"nvim-neotest/nvim-nio",
-			"nvim-lua/plenary.nvim",
-			"antoinemadec/FixCursorHold.nvim",
 			"nvim-treesitter/nvim-treesitter",
-		},
-		config = function()
-			require("plugins/neotest")
-		end
+			-- ----------------------	
+			'nvim-neotest/neotest-jest',
+			"fredrikaverpil/neotest-golang",
+		}
 	}
 
 	use {

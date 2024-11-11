@@ -144,3 +144,6 @@ lsp.lua_ls.setup {
 	},
 	on_attach = on_attach,
 }
+
+lsp.solidity_ls.setup {}
+lsp.ts_ls.setup {}
