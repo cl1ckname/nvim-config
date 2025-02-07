@@ -8,8 +8,48 @@ vim.fn.sign_define("DiagnosticSignInfo",
 vim.fn.sign_define("DiagnosticSignHint",
 	{ text = "󰌵", texthl = "DiagnosticSignHint" })
 
+local function copy_path(state)
+	-- NeoTree is based on [NuiTree](https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/tree)
+	-- The node is based on [NuiNode](https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/tree#nuitreenode)
+	local node = state.tree:get_node()
+	local filepath = node:get_id()
+	local filename = node.name
+	local modify = vim.fn.fnamemodify
+
+	local results = {
+		filepath,
+		modify(filepath, ":."),
+		modify(filepath, ":~"),
+		filename,
+		modify(filename, ":r"),
+		modify(filename, ":e"),
+	}
+
+	vim.ui.select({
+		"1. Absolute path: " .. results[1],
+		"2. Path relative to CWD: " .. results[2],
+		"3. Path relative to HOME: " .. results[3],
+		"4. Filename: " .. results[4],
+		"5. Filename without extension: " .. results[5],
+		"6. Extension of the filename: " .. results[6],
+	}, { prompt = "Choose to copy to clipboard:" }, function(choice)
+		if choice then
+			local i = tonumber(choice:sub(1, 1))
+			if i then
+				local result = results[i]
+				vim.fn.setreg('+', result)
+				vim.notify("Copied: " .. result)
+			else
+				vim.notify("Invalid selection")
+			end
+		else
+			vim.notify("Selection cancelled")
+		end
+	end)
+end
+
 require("neo-tree").setup({
-	close_if_last_window = true,     -- Close Neo-tree if it is the last window left in the tab
+	close_if_last_window = false,     -- Close Neo-tree if it is the last window left in the tab
 	popup_border_style = "rounded",
 	enable_git_status = true,
 	enable_diagnostics = true,
@@ -163,7 +203,7 @@ require("neo-tree").setup({
 			--  }
 			--}
 			["m"] = "move", -- takes text input for destination, also accepts the optional config.show_path option like "add".
-			["q"] = "close_window",
+			["<C-b>"] = "close_window",
 			["R"] = "refresh",
 			["?"] = "show_help",
 			["<"] = "prev_source",
@@ -214,7 +254,6 @@ require("neo-tree").setup({
 		-- instead of relying on nvim autocmd events.
 		window = {
 			mappings = {
-				["<bs>"] = "navigate_up",
 				["."] = "set_root",
 				["H"] = "toggle_hidden",
 				["/"] = "fuzzy_finder",
@@ -225,6 +264,7 @@ require("neo-tree").setup({
 				["<c-x>"] = "clear_filter",
 				["[g"] = "prev_git_modified",
 				["]g"] = "next_git_modified",
+				["Y"] = copy_path,
 				["o"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
 				["oc"] = { "order_by_created", nowait = false },
 				["od"] = { "order_by_diagnostics", nowait = false },
@@ -257,7 +297,6 @@ require("neo-tree").setup({
 		window = {
 			mappings = {
 				["bd"] = "buffer_delete",
-				["<bs>"] = "navigate_up",
 				["."] = "set_root",
 				["o"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
 				["oc"] = { "order_by_created", nowait = false },
@@ -291,7 +330,6 @@ require("neo-tree").setup({
 		}
 	}
 })
-
 
 --
 -- vim.cmd([[nnoremap \ :Neotree reveal<cr>]])

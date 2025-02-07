@@ -1,7 +1,5 @@
 nm('<C-b>', ':Neotree toggle last<CR>')
-nm('<leader>ll', ':BufferLinePick<CR>')
-nm('<S-Tab>', ':dl<CR>')
-nm('<leader>lk', ':dr<CR>')
+nm('<space>l', ':BufferLinePick<CR>')
 nm('<leader>q', ':bp<bar>sp<bar>bn<bar>bd<CR>')
 nm('<leader>w', ':BufferLineCloseOthers<CR>:bp<bar>sp<bar>bn<bar>bd<CR>')
 

@@ -47,12 +47,12 @@ cmp.setup {
 		} }, { 'i' }),
 		['<CR>'] = cmp.mapping.confirm({ select = true }), -- Я не люблю, когда вещи автодополняются на <Enter>
 		-- Используем <C-e> для того чтобы прервать автодополнение
-		['<C-e>'] = cmp.mapping({
+		[';'] = cmp.mapping({
 			i = cmp.mapping.abort(), -- Прерываем автодополнение
 			c = cmp.mapping.close(), -- Закрываем автодополнение
 		}),
-		['<C-[>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
-		['<C-p>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c' }),
+		[')'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
+		['('] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c' }),
 		['K'] = cmp.mapping(function(fallback)
 			if cmp.visible_docs() then
 				cmp.close_docs()
@@ -62,7 +62,7 @@ cmp.setup {
 				fallback()
 			end
 		end),
-		['<Tab>'] = cmp.mapping(function(fallback)
+		['<S-Tab>'] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
 			elseif luasnip.expand_or_jumpable() then
@@ -73,7 +73,7 @@ cmp.setup {
 				fallback()
 			end
 		end, { 'i', 's' }),
-		['<S-Tab>'] = cmp.mapping(function(fallback)
+		['<C-S-Tab>'] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
 			elseif luasnip.jumpable(-1) then
@@ -95,7 +95,6 @@ cmp.setup {
 			end,
 		},                              -- LSP 👄
 		{ name = 'nvim_lsp_signature_help' }, -- Помощь при введении параметров в методах 🚁
-		{ name = 'luasnip' },           -- Luasnip 🐌
 		{ name = 'nvim_lua' },
 		-- { name = 'neodev' },
 		-- { name = 'path' }, -- Пути 🪤
@@ -104,6 +103,11 @@ cmp.setup {
 	}, {
 	}),
 	formatting = {
+		fields = {
+			"kind",
+			"abbr",
+			"menu",
+		},
 		format = lspkind.cmp_format({
 			mode = 'symbol', -- show only symbol annotations
 			maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)

@@ -30,8 +30,8 @@ vim.cmd [[autocmd BufEnter * set fo-=c fo-=r fo-=o]]
 
 vim.cmd([[
 	set termguicolors
-	colorscheme rose-pine
 	set foldmethod=indent
+	colorscheme kanagawa
 	set colorcolumn=140
 ]])
 
@@ -47,5 +47,3 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 opt.exrc = true
 
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '

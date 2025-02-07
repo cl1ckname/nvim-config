@@ -80,9 +80,22 @@ return require('packer').startup(function(use)
 	use {
 		-- 'folke/tokyonight.nvim',
 		--	'NLKNguyen/papercolor-theme'
-		'rose-pine/neovim', as = 'rose-pine'
+		-- 'rose-pine/neovim', as = 'rose-pine'
+		'AlexvZyl/nordic.nvim',
+		"catppuccin/nvim", as = "catppuccin",
+		"rebelot/kanagawa.nvim",
 		--'frenzyexists/aquarium-vim'
 		--'marko-cerovac/material.nvim'
+		config = function()
+			require("nordic").setup({
+				transparent = {
+					-- Enable transparent background.
+					bg = true,
+					-- Enable transparent background for floating windows.
+					float = true,
+				},
+			})
+		end
 	}
 
 	use {
@@ -132,6 +145,7 @@ return require('packer').startup(function(use)
 			require("toggleterm").setup()
 		end
 	}
+
 	use({
 		'MeanderingProgrammer/render-markdown.nvim',
 		after = { 'nvim-treesitter' },
@@ -142,6 +156,7 @@ return require('packer').startup(function(use)
 			require('render-markdown').setup({})
 		end,
 	})
+
 	use {
 		'nvim-lualine/lualine.nvim',
 		requires = { 'nvim-tree/nvim-web-devicons', opt = true },

@@ -6,19 +6,20 @@ require('go').setup({
 	-- It is import to set ALL values in your own config if set value to true otherwise the plugin may not work
 	go = 'go', -- go command, can be go[default] or e.g. go1.18beta1
 	goimports = 'gopls', -- goimports command, can be gopls[default] or either goimports or golines if need to split long lines
-	gofmt = 'gopls', -- gofmt through gopls: alternative is gofumpt, goimports, golines, gofmt, etc
+	gofmt = 'gofmt', -- gofmt through gopls: alternative is gofumpt, goimports, golines, gofmt, etc
 	fillstruct = 'gopls', -- set to fillstruct if gopls fails to fill struct
-	max_line_len = 0, -- max line length in golines format, Target maximum line length for golines
+	-- max_line_len = 140, -- max line length in golines format, Target maximum line length for golines
 	tag_transform = false, -- can be transform option("snakecase", "camelcase", etc) check gomodifytags for details and more options
+	build_tags = "wireinject",
 	tag_options = 'json=omitempty', -- sets options sent to gomodifytags, i.e., json=omitempty
 	gotests_template = "", -- sets gotests -template parameter (check gotests for details)
 	gotests_template_dir = "", -- sets gotests -template_dir parameter (check gotests for details)
 	gotest_case_exact_match = true, -- true: run test with ^Testname$, false: run test with TestName
 	comment_placeholder = '', -- comment_placeholder your cool placeholder e.g. 󰟓       
 	icons = { breakpoint = '🧘', currentpos = '🏃' }, -- setup to `false` to disable icons setup
-	verbose = false, -- output loginf in messages
+	verbose = true, -- output loginf in messages
 	lsp_semantic_highlights = true, -- use highlights from gopls
-	lsp_cfg = true, -- true: use non-default gopls setup specified in go/lsp.lua
+	lsp_cfg = false, -- true: use non-default gopls setup specified in go/lsp.lua
 	-- false: do nothing
 	-- if lsp_cfg is a table, merge table with with non-default gopls setup in go/lsp.lua, e.g.
 	-- lsp_cfg = {settings={gopls={matcher='CaseInsensitive', ['local'] = 'your_local_module_path', gofumpt = true }}}
@@ -28,19 +29,11 @@ require('go').setup({
 	--      when lsp_cfg is true
 	-- if lsp_on_attach is a function: use this function as on_attach function for gopls
 	lsp_keymaps = true, -- set to false to disable gopls/lsp keymap
-	lsp_codelens = true, -- set to false to disable codelens, true by default, you can use a function
+	lsp_codelens = false, -- set to false to disable codelens, true by default, you can use a function
 	-- function(bufnr)
 	--    vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>F", "<cmd>lua vim.lsp.buf.formatting()<CR>", {noremap=true, silent=true})
 	-- end
 	-- to setup a table of codelens
-	null_ls = {                                                               -- set to false to disable null-ls setup
-		golangci_lint = {
-			method = { "NULL_LS_DIAGNOSTICS_ON_SAVE", "NULL_LS_DIAGNOSTICS_ON_OPEN" }, -- when it should run
-			-- disable = {'errcheck', 'staticcheck'}, -- linters to disable empty by default
-			-- enable = {'govet', 'ineffassign','revive', 'gosimple'}, -- linters to enable; empty by default
-			severity = vim.diagnostic.severity.INFO, -- severity level of the diagnostics
-		},
-	},
 	diagnostic = { -- set diagnostic to false to disable vim.diagnostic.config setup,
 		-- true: default nvim setup
 		hdlr = false, -- hook lsp diag handler and send diag to quickfix
@@ -52,7 +45,7 @@ require('go').setup({
 	-- if you need to setup your ui for input and select, you can do it here
 	-- go_input = require('guihua.input').input -- set to vim.ui.input to disable guihua input
 	-- go_select = require('guihua.select').select -- vim.ui.select to disable guihua select
-	lsp_document_formatting = true,
+	lsp_document_formatting = false,
 	-- set to true: use gopls to format
 	-- false if you want to use other formatter tool(e.g. efm, nulls)
 	lsp_inlay_hints = {
@@ -103,7 +96,6 @@ require('go').setup({
 	dap_port = 38697,                                                           -- can be set to a number, if set to -1 go.nvim will pick up a random port
 	dap_timeout = 15,                                                           --  see dap option initialize_timeout_sec = 15,
 	dap_retries = 20,                                                           -- see dap option max_retries
-	build_tags = "tag1,tag2",                                                   -- set default build tags
 	textobjects = true,                                                         -- enable default text objects through treesittter-text-objects
 	test_runner = 'go',                                                         -- one of {`go`,  `dlv`, `ginkgo`, `gotestsum`}
 	verbose_tests = true,                                                       -- set to add verbose flag to tests deprecated, see '-v' option
@@ -120,11 +112,11 @@ require('go').setup({
 	},
 	trouble = false,                                                          -- true: use trouble to open quickfix
 	test_efm = false,                                                         -- errorfomat for quickfix, default mix mode, set to true will be efm only
-	luasnip = false,                                                          -- enable included luasnip snippets. you can also disable while add lua/snips folder to luasnip load
+	luasnip = true,                                                          -- enable included luasnip snippets. you can also disable while add lua/snips folder to luasnip load
 	--  Do not enable this if you already added the path, that will duplicate the entries
 	on_jobstart = function(cmd) _ = cmd end,                                  -- callback for stdout
 	on_stdout = function(err, data) _, _ = err, data end,                     -- callback when job started
-	on_stderr = function(err, data) _, _ = err, data end,                     -- callback for stderr
+	on_stderr = function(err, data) print(err, data) end,                     -- callback for stderr
 	on_exit = function(code, signal, output) _, _, _ = code, signal, output end, -- callback for jobexit, output : string
 	iferr_vertical_shift = 4                                                  -- defines where the cursor will end up vertically from the begining of if err statement
 })

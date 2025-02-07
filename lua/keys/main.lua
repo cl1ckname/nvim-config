@@ -8,8 +8,7 @@ im('<C-j>', '<Down>')
 im('<C-k>', '<Up>')
 im('jj', '<ESC>')
 
-nm('q', ':q<CR>')
-nm('<C-q>', ':wq<CR>')
+nm('<C-q>', ':wq<CR>') 
 nm('<S-k>', '<cmd>lua vim.lsp.buf.hover<CR>')
 
 nm('hr', ':source $HOME/.config/nvim/init.lua<CR>')
@@ -24,3 +23,6 @@ nm('gf', ':lua vim.lsp.buf.format()<CR>')
 nm('G', 'Gzz')
 nm('}', '}zz')
 nm('{', '{zz')
+
+im('{{', '{}<left>')
+im('{<CR>', '{<CR>}<left><CR><up><Tab>')

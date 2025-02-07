@@ -22,7 +22,9 @@ return {
 	s({ trig = "lln", name = "Log newline", dscr = "Insert log with newline" }, {
 		t("log.Println(\""),
 		i(1, "content"),
-		t("\")"),
+		t("\","),
+		i(2, "args"),
+		t(")"),
 	}),
 
 	s({ trig = "werr", name = "Wrapped error", dscr = "Wrap error with fmt.Errorf" }, {
@@ -36,11 +38,10 @@ return {
     return err
   }
   ]]),
-
-	parse({ trig = "ifel", name = "If Err Log Fatal", dscr = "Insert a basic if err not nil statement with log.Fatal" },
-		[[
+	
+	parse({ trig = "ifel", name = "If Err nil", dscr = "Insert a if err not nil return nil statement" }, [[
   if err != nil {
-    log.Fatal(err)
+    return nil, err
   }
   ]]),
 

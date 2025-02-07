@@ -15,6 +15,7 @@ local on_attach = function(client, bufnr)
 	buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
 	buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
 	buf_set_keymap('n', 'ga', '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+	buf_set_keymap('n', '<space>rr', '<Cmd>lua vim.lsp.buf.rename()<CR>', opts)
 	buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
 	buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
 	buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
@@ -29,19 +30,11 @@ local on_attach = function(client, bufnr)
 	buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
 	buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()()<CR>', opts)
 	buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+	buf_set_keymap('i', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
 
 	-- Set some keybinds conditional on server capabilities
 	buf_set_keymap("n", "ff", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
 	-- buf_set_keymap("n", "ff", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
-
-	-- Set autocommands conditional on server_capabilities
-	--if client.resolved_capabilities.document_highlight then
-	vim.api.nvim_exec([[
-      hi LspReferenceRead cterm=bold ctermbg=DarkMagenta guibg=LightYellow
-      hi LspReferenceText cterm=bold ctermbg=DarkMagenta guibg=LightYellow
-      hi LspReferenceWrite cterm=bold ctermbg=DarkMagenta guibg=LightYellow
-    ]], false)
-	--end
 end
 
 lsp.yamlls.setup {
@@ -71,6 +64,7 @@ lsp.gopls.setup({
 	-- for postfix snippets and analyzers
 	settings = {
 		gopls = {
+			buildFlags = {"-tags=wireinject"},
 			experimentalPostfixCompletions = true,
 			analyses = {
 				unusedparams = true,
@@ -106,6 +100,8 @@ lsp.gopls.setup({
 	},
 	on_attach = on_attach,
 })
+
+-- lsp.golangci_lint_ls.setup{}
 
 lsp.lua_ls.setup {
 	on_init = function(client)
@@ -145,5 +141,9 @@ lsp.lua_ls.setup {
 	on_attach = on_attach,
 }
 
+lsp.sqlls.setup {}
 lsp.solidity_ls.setup {}
-lsp.ts_ls.setup {}
+lsp.ts_ls.setup {
+	on_attach = on_attach,
+	capabilities = capabilities,
+}
