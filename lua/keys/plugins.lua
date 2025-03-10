@@ -11,10 +11,5 @@ nm('<C-L>', ':GoImports<CR>')
 nm('<space>vc', ':Gitsigns preview_hunk<CR>')
 nm('<space>vd', ':Gitsigns toggle_deleted<CR>')
 
-nm('<space>gd', '<cmd>Glance defenitions<cr>')
-nm('<space>gr', '<cmd>Glance references<cr>')
-
-im('<leader>se', '<cmd>EmojiInsert<cr>')
+im('<leader>se', '<cmd>Emoji<cr>')
 im('<leader>sk', '<cmd>KaomojiInsertByGroup<cr>')
-
--- nm('<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')

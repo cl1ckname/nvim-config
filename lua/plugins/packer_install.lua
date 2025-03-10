@@ -47,6 +47,12 @@ return require('packer').startup(function(use)
 			require("plugins/treesitter")
 		end,
 	}
+	use {
+		'nvimtools/none-ls.nvim',
+		config = function()
+			require("plugins/none")
+		end
+	}
 
 	-- cmp: Autocomplete
 	use({
@@ -228,5 +234,18 @@ return require('packer').startup(function(use)
 			require('plugins/emoji')
 		end,
 		after = { "nvim-cmp", "telescope.nvim", "dressing.nvim" }
+	}
+
+	use {
+		'windwp/nvim-ts-autotag',
+		config = function()
+			require('plugins/autotag')
+		end
+	}
+	use {
+		'MunifTanjim/prettier.nvim',
+		config = function()
+			require('plugins/prettier')
+		end
 	}
 end)
