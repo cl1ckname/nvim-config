@@ -36,14 +36,6 @@ vim.cmd([[
 ]])
 
 
-local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
-vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = "*.go",
-	callback = function()
-		require('go.format').goimports()
-	end,
-	group = format_sync_grp,
-})
 vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 opt.exrc = true
 

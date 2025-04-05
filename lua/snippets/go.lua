@@ -38,7 +38,7 @@ return {
     return err
   }
   ]]),
-	
+
 	parse({ trig = "ifel", name = "If Err nil", dscr = "Insert a if err not nil return nil statement" }, [[
   if err != nil {
     return nil, err
@@ -69,6 +69,11 @@ func Test${1:Name}(t *testing.T) {
 	parse({ trig = "mtest", name = "Test method", dscr = "Insert method for testify suite" }, [[
 func (${1:suite}) Test${2:Name}() {
 	$3
-}]])
+}]]),
+	parse({ trig = "subtest", name = "Test function", dscr = "Insert simple test function" }, [[
+t.Run("${1:Name}", func (t *testing.T) {
+	$2
+})]]),
+
 
 }

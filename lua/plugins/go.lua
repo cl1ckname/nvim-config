@@ -18,7 +18,7 @@ require('go').setup({
 	comment_placeholder = '', -- comment_placeholder your cool placeholder e.g. 󰟓       
 	icons = { breakpoint = '🧘', currentpos = '🏃' }, -- setup to `false` to disable icons setup
 	verbose = true, -- output loginf in messages
-	lsp_semantic_highlights = true, -- use highlights from gopls
+	lsp_semantic_highlights = false, -- use highlights from gopls
 	lsp_cfg = false, -- true: use non-default gopls setup specified in go/lsp.lua
 	-- false: do nothing
 	-- if lsp_cfg is a table, merge table with with non-default gopls setup in go/lsp.lua, e.g.
@@ -86,7 +86,7 @@ require('go').setup({
 	gopls_remote_auto = true, -- add -remote=auto to gopls
 	gocoverage_sign = "█",
 	sign_priority = 5,     -- change to a higher number to override other signs
-	dap_debug = true,      -- set to false to disable dap
+	dap_debug = false,      -- set to false to disable dap
 	dap_debug_keymap = true, -- true: use keymap for debugger defined in go/dap.lua
 	-- false: do not use keymap in go/dap.lua.  you must define your own.
 	-- Windows: Use Visual Studio keymap

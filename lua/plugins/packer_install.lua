@@ -93,13 +93,8 @@ return require('packer').startup(function(use)
 		--'frenzyexists/aquarium-vim'
 		--'marko-cerovac/material.nvim'
 		config = function()
-			require("nordic").setup({
-				transparent = {
-					-- Enable transparent background.
-					bg = true,
-					-- Enable transparent background for floating windows.
-					float = true,
-				},
+			require("kanagawa").setup({
+				transparent = true,
 			})
 		end
 	}
@@ -238,9 +233,6 @@ return require('packer').startup(function(use)
 
 	use {
 		'windwp/nvim-ts-autotag',
-		config = function()
-			require('plugins/autotag')
-		end
 	}
 	use {
 		'MunifTanjim/prettier.nvim',

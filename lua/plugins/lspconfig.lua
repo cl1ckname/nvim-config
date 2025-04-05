@@ -64,7 +64,7 @@ lsp.gopls.setup({
 	-- for postfix snippets and analyzers
 	settings = {
 		gopls = {
-			buildFlags = {"-tags=wireinject"},
+			buildFlags = { "-tags=wireinject" },
 			experimentalPostfixCompletions = true,
 			analyses = {
 				unusedparams = true,
@@ -97,7 +97,17 @@ lsp.gopls.setup({
 			usePlaceholders = true,
 		},
 	},
-	on_attach = on_attach,
+	on_attach = function(cl, bfrn)
+		local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
+		vim.api.nvim_create_autocmd("BufWritePre", {
+			pattern = "*.go",
+			callback = function()
+				require('go.format').goimports()
+			end,
+			group = format_sync_grp,
+		})
+		on_attach(cl, bfrn)
+	end,
 })
 
 -- lsp.golangci_lint_ls.setup{}
@@ -143,6 +153,54 @@ lsp.lua_ls.setup {
 lsp.sqlls.setup {}
 lsp.solidity_ls.setup {}
 lsp.ts_ls.setup {
-	on_attach = on_attach,
+	on_attach = function(client, bufnr)
+		vim.api.nvim_create_autocmd('FileType', {
+			pattern = { 'html', 'javascript', 'typescript', 'jsx', 'tsx' },
+			callback = function()
+				require('nvim-ts-autotag').setup()
+			end,
+		})
+		on_attach(client, bufnr)
+	end,
 	capabilities = capabilities,
 }
+lsp.nil_ls.setup({
+	-- Optional: Custom settings for nil
+	settings = {
+		['nil'] = {
+			formatting = {
+				command = { "nixpkgs-fmt" }, -- Optional: Auto-format with nixpkgs-fmt
+			},
+		},
+	},
+	on_attach = function(client, bufnr)
+		-- Enable formatting on save
+		vim.api.nvim_create_autocmd('BufWritePre', {
+			buffer = bufnr,
+			callback = function()
+				vim.lsp.buf.format({ async = false }) -- Blocking format (sync)
+			end,
+		})
+		on_attach(client, bufnr)
+	end,
+})
+
+lsp.rust_analyzer.setup({
+	on_attach = function(client, bufnr)
+		-- Keymaps for Rust
+		vim.keymap.set('n', '<leader>cb', ':!bacon check<CR>', { buffer = true, desc = "Bacon check" })
+		on_attach(client, bufnr)
+	end,
+	settings = {
+		["rust-analyzer"] = {
+			checkOnSave = {
+				command = "clippy", -- Bacon will handle background checks
+				extraArgs = { "--no-deps" }
+			},
+			diagnostics = {
+				enable = true,
+				experimental = { enable = true }, -- More aggressive checks
+			},
+		}
+	},
+})
