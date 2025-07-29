@@ -55,7 +55,7 @@ require('dashboard').setup {
 				key = 'c',
 				action = ':execute \'cd \' . fnamemodify(expand(\'$MYVIMRC\'), \':h\') | enew',
 			},
-						{
+			{
 				desc = ' Terminal',
 				group = '@lsp.type.string',
 				key = 't',

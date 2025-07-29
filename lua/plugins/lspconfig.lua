@@ -1,4 +1,10 @@
 local lsp = require('lspconfig')
+local present, null_ls = pcall(require, "null-ls")
+
+if not present then
+	return
+end
+
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -203,4 +209,30 @@ lsp.rust_analyzer.setup({
 			},
 		}
 	},
+})
+
+lsp.clangd.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+	filetypes = { "h", "c", "cpp", "cc", "objc", "objcpp" },
+	cmd = { "clangd", "--background-index" },
+	single_file_support = true,
+	root_dir = lsp.util.root_pattern(
+		'.clangd',
+		'.clang-tidy',
+		'.clang-format',
+		'compile_commands.json',
+		'compile_flags.txt',
+		'configure.ac',
+		'.git'
+	)
+})
+
+
+lsp.pyright.setup({
+	on_attach = on_attach
+})
+
+lsp.dockerls.setup({
+	on_attach = on_attach
 })

@@ -38,4 +38,3 @@ vim.cmd([[
 
 vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 opt.exrc = true
-

@@ -13,3 +13,4 @@ nm('<space>vd', ':Gitsigns toggle_deleted<CR>')
 
 im('<leader>se', '<cmd>Emoji<cr>')
 im('<leader>sk', '<cmd>KaomojiInsertByGroup<cr>')
+

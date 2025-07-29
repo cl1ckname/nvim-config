@@ -1,3 +1,4 @@
+print("hello ?")
 require('plugins/packer_install')
 require('base/search')
 require('base/tabs')

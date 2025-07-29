@@ -1,3 +1,29 @@
+local ensure_packer = function()
+	local fn = vim.fn
+	local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+	if fn.empty(fn.glob(install_path)) > 0 then
+		fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+		vim.cmd [[packadd packer.nvim]]
+		return true
+	end
+	return false
+end
+
+local packer_bootstrap = ensure_packer()
+
+require('packer').startup(function(use)
+	use 'wbthomason/packer.nvim'
+	-- My plugins here
+	-- use 'foo1/bar1.nvim'
+	-- use 'foo2/bar2.nvim'
+
+	-- Automatically set up your configuration after cloning packer.nvim
+	-- Put this at the end after all plugins
+	if packer_bootstrap then
+		require('packer').sync()
+	end
+end)
+
 -- Добавляем Packer как пакет в Neovim
 vim.cmd [[packadd packer.nvim]]
 
@@ -51,7 +77,10 @@ return require('packer').startup(function(use)
 		'nvimtools/none-ls.nvim',
 		config = function()
 			require("plugins/none")
-		end
+		end,
+		requires = {
+			"nvimtools/none-ls-extras.nvim",
+		}
 	}
 
 	-- cmp: Autocomplete
@@ -132,6 +161,17 @@ return require('packer').startup(function(use)
 		end
 	}
 
+	use {
+		"chrisgrieser/nvim-various-textobjs",
+		config = function()
+			require("various-textobjs").setup({
+				keymaps = {
+					useDefaults = true
+				}
+			})
+		end,
+	}
+
 	use 'ryanoasis/vim-devicons'
 	use {
 		'nvim-tree/nvim-web-devicons',
@@ -146,6 +186,13 @@ return require('packer').startup(function(use)
 			require("toggleterm").setup()
 		end
 	}
+
+	use({
+		"3rd/image.nvim",
+		config = function()
+			require("image").setup()
+		end
+	})
 
 	use({
 		'MeanderingProgrammer/render-markdown.nvim',
