@@ -170,6 +170,7 @@ lsp.ts_ls.setup {
 	end,
 	capabilities = capabilities,
 }
+
 lsp.nil_ls.setup({
 	-- Optional: Custom settings for nil
 	settings = {

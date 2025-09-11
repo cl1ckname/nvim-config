@@ -6,18 +6,21 @@ end
 ts.setup({
 	highlight = {
 		enable = true,
-		additional_vim_regex_highlighting = false,
+		additional_vim_regex_highlighting = true,
 	},
 	context_commentstring = {
 		enable = true,
 		enable_autocmd = false,
 	},
+	auto_install = true,
 	ensure_installed = {
 		"c",
 		"markdown",
 		"tsx",
 		"typescript",
 		"go",
+		"gomod",
+		"gosum",
 		"javascript",
 		"toml",
 		"json",
