@@ -6,6 +6,7 @@ local go_config = { -- Specify configuration
 	},
 	testify_enabled = true,
 }
+
 local jest_config = {
 	jestCommand = "npm test --",
 	jestConfigFile = "custom.jest.config.ts",
@@ -14,9 +15,10 @@ local jest_config = {
 		return vim.fn.getcwd()
 	end,
 }
+
 neotest.setup({
 	adapters = {
 		require("neotest-golang")(go_config), -- Apply configuration
-		require("neotest-jest")(jest_config)
+		require("neotest-jest")(jest_config),
 	},
 })

@@ -10,8 +10,43 @@ local header = {
 	[[ ]],
 	[[ ]],
 	[[ ]],
-
 }
+local header2 = {
+	[[           __________                                     ]],
+	[[          .'----------`.                                  ]],
+	[[          | .--------. |                                  ]],
+	[[          | |########| |       __________                 ]],
+	[[          | |########| |      /__________\                ]],
+	[[ .--------| `--------' |------|    --=-- |-------------.  ]],
+	[[ |        `----,-.-----'      |o ======  |             |  ]],
+	[[ |       ______|_|_______     |__________|             |  ]],
+	[[ |      /  %%%%%%%%%%%%  \                             |  ]],
+	[[ |     /  %%%%%%%%%%%%%%  \                            |  ]],
+	[[ |     ^^^^^^^^^^^^^^^^^^^^                            |  ]],
+	[[ +-----------------------------------------------------+  ]],
+	[[ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  ]],
+}
+local header3 = {
+	[[             ,───────────────╮              ,---------,]],
+	[[        ,───────────────────────╮          ,"        ,"|]],
+	[[      ,"                      ,"│        ,"        ,"  |]],
+	[[     +───────────────────────╮  │      ,"        ,"    |]],
+	[[     │  ╔═════════════════╗  │  │     +---------+      |]],
+	[[     │  ║                 ║  │  │     │ -==----'│      |]],
+	[[     │  ║  I LOVE NVIM!   ║  │  │     │         │      |]],
+	[[     │  ║  Ready to code  ║  │  │/----│`---=    │      |]],
+	[[     │  ║  ~$             ║  │  │   ,/│==== ooo │      ;]],
+	[[     │  ║                 ║  │  │  // │(((( [33]│    ," ]],
+	[[     │  ╚═════════════════╝  │," .;'| │((((     │  ,"   ]],
+	[[     +───────────────────────+  ;;  | │         │,"     ]],
+	[[        /_)______________(_/  //'   | +---------+       ]],
+	[[   ___________________________/___  `,                  ]],
+	[[  /  oooooooooooooooo  .o.  oooo /,   \,"-----------    ]],
+	[[ / ==ooooooooooooooo==.o.  ooo= //   ,`\--{)B     ,"    ]],
+	[[/_==__==========__==_ooo__ooo=_/'   /___________,"      ]],
+	[[                                                        ]],
+}
+
 -- local header = {
 -- 	"", "", "", "", "", "",
 -- 	[[ ███▄    █     ▒█████      ██▓    ▄████▄     ▓█████   ]],
@@ -25,10 +60,10 @@ local header = {
 -- 	[[         ░        ░ ░      ░     ░ ░            ░  ░  ]],
 -- 	[[                                 ░                    ]]
 -- }
-require('dashboard').setup {
+require("dashboard").setup({
 	config = {
 		packages = { enable = false },
-		header = header,
+		header = header3,
 		week_header = {
 			enable = false,
 			append = { "for true { code() }" },
@@ -36,32 +71,32 @@ require('dashboard').setup {
 		footer = { "󱎓 It's time to make great things " },
 		shortcut = {
 			{
-				icon = ' ',
-				icon_hl = '@variable',
-				desc = 'Files',
-				group = 'Label',
-				action = 'Telescope find_files',
-				key = 'f',
+				icon = " ",
+				icon_hl = "@variable",
+				desc = "Files",
+				group = "Label",
+				action = "Telescope find_files",
+				key = "f",
 			},
 			{
-				desc = '  New file',
-				group = 'Macro',
-				key = 'n',
-				action = 'enew',
+				desc = "  New file",
+				group = "Macro",
+				key = "n",
+				action = "enew",
 			},
 			{
-				desc = ' Config nvim',
-				group = '@conditional',
-				key = 'c',
-				action = ':execute \'cd \' . fnamemodify(expand(\'$MYVIMRC\'), \':h\') | enew',
+				desc = " Config nvim",
+				group = "@conditional",
+				key = "c",
+				action = ":execute 'cd ' . fnamemodify(expand('$MYVIMRC'), ':h') | enew",
 			},
 			{
-				desc = ' Terminal',
-				group = '@lsp.type.string',
-				key = 't',
-				action = 'ToggleTerm direction=float',
+				desc = " Terminal",
+				group = "@lsp.type.string",
+				key = "t",
+				action = "ToggleTerm direction=float",
 			},
-		}
+		},
 	},
-	theme = 'hyper',
-}
+	theme = "hyper",
+})

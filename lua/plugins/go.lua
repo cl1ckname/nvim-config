@@ -1,31 +1,61 @@
-local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 capabilities.textDocument.completion.completionItem.snippetSupport = true
-require('go').setup({
+require("go").setup({
 	disable_defaults = false, -- true|false when true set false to all boolean settings and replace all tables
 	-- settings with {}; string will be set to ''. user need to setup ALL the settings
 	-- It is import to set ALL values in your own config if set value to true otherwise the plugin may not work
-	go = 'go', -- go command, can be go[default] or e.g. go1.18beta1
-	goimports = 'gopls', -- goimports command, can be gopls[default] or either goimports or golines if need to split long lines
-	gofmt = 'gofmt', -- gofmt through gopls: alternative is gofumpt, goimports, golines, gofmt, etc
-	fillstruct = 'gopls', -- set to fillstruct if gopls fails to fill struct
+	go = "go", -- go command, can be go[default] or e.g. go1.18beta1
+	goimports = "gopls", -- goimports command, can be gopls[default] or either goimports or golines if need to split long lines
+	gofmt = "gofmt", -- gofmt through gopls: alternative is gofumpt, goimports, golines, gofmt, etc
+	fillstruct = "gopls", -- set to fillstruct if gopls fails to fill struct
 	-- max_line_len = 140, -- max line length in golines format, Target maximum line length for golines
 	tag_transform = false, -- can be transform option("snakecase", "camelcase", etc) check gomodifytags for details and more options
 	build_tags = "wireinject",
-	tag_options = 'json=omitempty', -- sets options sent to gomodifytags, i.e., json=omitempty
+	tag_options = "json=omitempty", -- sets options sent to gomodifytags, i.e., json=omitempty
 	gotests_template = "", -- sets gotests -template parameter (check gotests for details)
 	gotests_template_dir = "", -- sets gotests -template_dir parameter (check gotests for details)
 	gotest_case_exact_match = true, -- true: run test with ^Testname$, false: run test with TestName
-	comment_placeholder = '', -- comment_placeholder your cool placeholder e.g. 󰟓       
-	icons = { breakpoint = '🧘', currentpos = '🏃' }, -- setup to `false` to disable icons setup
+	comment_placeholder = "", -- comment_placeholder your cool placeholder e.g. 󰟓       
+	icons = { breakpoint = "🧘", currentpos = "🏃" }, -- setup to `false` to disable icons setup
 	verbose = true, -- output loginf in messages
 	lsp_semantic_highlights = false, -- use highlights from gopls
-	lsp_cfg = false, -- true: use non-default gopls setup specified in go/lsp.lua
+	lsp_cfg = true, -- true: use non-default gopls setup specified in go/lsp.lua
 	-- false: do nothing
 	-- if lsp_cfg is a table, merge table with with non-default gopls setup in go/lsp.lua, e.g.
 	-- lsp_cfg = {settings={gopls={matcher='CaseInsensitive', ['local'] = 'your_local_module_path', gofumpt = true }}}
 	lsp_gofumpt = true, -- true: set default gofmt in gopls format to gofumpt
 	-- false: do not set default gofmt in gopls format to gofumpt
-	lsp_on_attach = false, -- nil: use on_attach function defined in go/lsp.lua,
+	lsp_on_attach = function(client, bufnr)
+		local function buf_set_keymap(...)
+			vim.api.nvim_buf_set_keymap(bufnr, ...)
+		end
+
+		-- Mappings.
+		local opts = { noremap = true, silent = true }
+		buf_set_keymap("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+		buf_set_keymap("n", "gd", "<Cmd>Glance definitions<CR>", opts)
+		buf_set_keymap("n", "ga", "<Cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+		buf_set_keymap("n", "<space>rr", "<Cmd>lua vim.lsp.buf.rename()<CR>", opts)
+		buf_set_keymap("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
+		buf_set_keymap("n", "gi", "<cmd>Glance implementations<CR>", opts)
+		buf_set_keymap("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+		buf_set_keymap("n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
+		buf_set_keymap("n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
+		buf_set_keymap("n", "<space>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", opts)
+		buf_set_keymap("n", "<space>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
+		buf_set_keymap("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
+		buf_set_keymap("n", "gr", "<cmd>Glance references<CR>", opts)
+		buf_set_keymap("n", "<space>e", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+		buf_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
+		buf_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+		buf_set_keymap("n", "<space>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
+		buf_set_keymap("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+		buf_set_keymap("i", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+
+		-- Set some keybinds conditional on server capabilities
+		buf_set_keymap("n", "ff", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
+		-- buf_set_keymap("n", "ff", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+	end, -- nil: use on_attach function defined in go/lsp.lua,
 	--      when lsp_cfg is true
 	-- if lsp_on_attach is a function: use this function as on_attach function for gopls
 	lsp_keymaps = true, -- set to false to disable gopls/lsp keymap
@@ -38,8 +68,8 @@ require('go').setup({
 		-- true: default nvim setup
 		hdlr = false, -- hook lsp diag handler and send diag to quickfix
 		underline = true,
-		virtual_text = { spacing = 2, prefix = '' }, -- virtual text setup
-		signs = { '', '', '', '' }, -- set to true to use default signs, an array of 4 to specify custom signs
+		virtual_text = { spacing = 2, prefix = "" }, -- virtual text setup
+		signs = { "", "", "", "" }, -- set to true to use default signs, an array of 4 to specify custom signs
 		update_in_insert = true,
 	},
 	-- if you need to setup your ui for input and select, you can do it here
@@ -53,7 +83,7 @@ require('go').setup({
 
 		-- following are used for neovim < 0.10 which does not implement inlay hints
 		-- hint style, set to 'eol' for end-of-line hints, 'inlay' for inline hints
-		style = 'eol',
+		style = "eol",
 		-- Note: following setup only works for style = 'eol', you do not need to set it for 'inlay'
 		-- Only show inlay hints for the current line
 		only_current_line = false,
@@ -82,41 +112,49 @@ require('go').setup({
 		-- The color of the hints
 		highlight = "Comment",
 	},
-	gopls_cmd = nil,       -- if you need to specify gopls path and cmd, e.g {"/home/user/lsp/gopls", "-logfile","/var/log/gopls.log" }
+	gopls_cmd = nil, -- if you need to specify gopls path and cmd, e.g {"/home/user/lsp/gopls", "-logfile","/var/log/gopls.log" }
 	gopls_remote_auto = true, -- add -remote=auto to gopls
 	gocoverage_sign = "█",
-	sign_priority = 5,     -- change to a higher number to override other signs
-	dap_debug = false,      -- set to false to disable dap
+	sign_priority = 5, -- change to a higher number to override other signs
+	dap_debug = false, -- set to false to disable dap
 	dap_debug_keymap = true, -- true: use keymap for debugger defined in go/dap.lua
 	-- false: do not use keymap in go/dap.lua.  you must define your own.
 	-- Windows: Use Visual Studio keymap
-	dap_debug_gui = {},                                                         -- bool|table put your dap-ui setup here set to false to disable
+	dap_debug_gui = {}, -- bool|table put your dap-ui setup here set to false to disable
 	dap_debug_vt = { enabled = true, enabled_commands = true, all_frames = true }, -- bool|table put your dap-virtual-text setup here set to false to disable
 
-	dap_port = 38697,                                                           -- can be set to a number, if set to -1 go.nvim will pick up a random port
-	dap_timeout = 15,                                                           --  see dap option initialize_timeout_sec = 15,
-	dap_retries = 20,                                                           -- see dap option max_retries
-	textobjects = true,                                                         -- enable default text objects through treesittter-text-objects
-	test_runner = 'go',                                                         -- one of {`go`,  `dlv`, `ginkgo`, `gotestsum`}
-	verbose_tests = true,                                                       -- set to add verbose flag to tests deprecated, see '-v' option
-	run_in_floaterm = false,                                                    -- set to true to run in a float window. :GoTermClose closes the floatterm
+	dap_port = 38697, -- can be set to a number, if set to -1 go.nvim will pick up a random port
+	dap_timeout = 15, --  see dap option initialize_timeout_sec = 15,
+	dap_retries = 20, -- see dap option max_retries
+	textobjects = true, -- enable default text objects through treesittter-text-objects
+	test_runner = "go", -- one of {`go`,  `dlv`, `ginkgo`, `gotestsum`}
+	verbose_tests = true, -- set to add verbose flag to tests deprecated, see '-v' option
+	run_in_floaterm = false, -- set to true to run in a float window. :GoTermClose closes the floatterm
 	-- float term recommend if you use gotestsum ginkgo with terminal color
 
-	floaterm = {         -- position
-		posititon = 'auto', -- one of {`top`, `bottom`, `left`, `right`, `center`, `auto`}
-		width = 0.45,    -- width of float window if not auto
-		height = 0.98,   -- height of float window if not auto
-		title_colors = 'nord', -- default to nord, one of {'nord', 'tokyo', 'dracula', 'rainbow', 'solarized ', 'monokai'}
+	floaterm = { -- position
+		posititon = "auto", -- one of {`top`, `bottom`, `left`, `right`, `center`, `auto`}
+		width = 0.45, -- width of float window if not auto
+		height = 0.98, -- height of float window if not auto
+		title_colors = "nord", -- default to nord, one of {'nord', 'tokyo', 'dracula', 'rainbow', 'solarized ', 'monokai'}
 		-- can also set to a list of colors to define colors to choose from
 		-- e.g {'#D8DEE9', '#5E81AC', '#88C0D0', '#EBCB8B', '#A3BE8C', '#B48EAD'}
 	},
-	trouble = false,                                                          -- true: use trouble to open quickfix
-	test_efm = false,                                                         -- errorfomat for quickfix, default mix mode, set to true will be efm only
-	luasnip = true,                                                          -- enable included luasnip snippets. you can also disable while add lua/snips folder to luasnip load
+	trouble = false, -- true: use trouble to open quickfix
+	test_efm = false, -- errorfomat for quickfix, default mix mode, set to true will be efm only
+	luasnip = true, -- enable included luasnip snippets. you can also disable while add lua/snips folder to luasnip load
 	--  Do not enable this if you already added the path, that will duplicate the entries
-	on_jobstart = function(cmd) _ = cmd end,                                  -- callback for stdout
-	on_stdout = function(err, data) _, _ = err, data end,                     -- callback when job started
-	on_stderr = function(err, data) print(err, data) end,                     -- callback for stderr
-	on_exit = function(code, signal, output) _, _, _ = code, signal, output end, -- callback for jobexit, output : string
-	iferr_vertical_shift = 4                                                  -- defines where the cursor will end up vertically from the begining of if err statement
+	on_jobstart = function(cmd)
+		_ = cmd
+	end, -- callback for stdout
+	on_stdout = function(err, data)
+		_, _ = err, data
+	end, -- callback when job started
+	on_stderr = function(err, data)
+		print(err, data)
+	end, -- callback for stderr
+	on_exit = function(code, signal, output)
+		_, _, _ = code, signal, output
+	end, -- callback for jobexit, output : string
+	iferr_vertical_shift = 4, -- defines where the cursor will end up vertically from the begining of if err statement
 })

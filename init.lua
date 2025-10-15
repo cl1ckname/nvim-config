@@ -1,5 +1,5 @@
 print("hello ?")
-require('plugins/packer_install')
+require('plugins/lazy')
 require('base/search')
 require('base/tabs')
 require('keys/main')
