@@ -7,7 +7,7 @@ require("mason-lspconfig").setup({
 		-- From lspconfig.lua
 		"yamlls",
 		"buf_ls",
-		"gopls",
+		-- "gopls",
 		"lua_ls",
 		"sqlls",
 		"solidity_ls_nomicfoundation",
@@ -18,7 +18,7 @@ require("mason-lspconfig").setup({
 		"pyright",
 		"dockerls",
 	},
-	automatic_installation = true,
+	automatic_installation = false,
 })
 
 -- Ensure formatters/linters and other tools are installed
@@ -36,7 +36,7 @@ require("mason-tool-installer").setup({
 		-- Nix
 		-- "nixpkgs-fmt",
 	},
-	run_on_start = true,
+	-- run_on_start = true,
 	start_delay = 100,
 	debounce_hours = 24,
 })

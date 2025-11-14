@@ -55,57 +55,46 @@ lsp.yamlls.setup({
 
 lsp.buf_ls.setup({})
 
--- lsp.gopls.setup({
--- 	cmd = { "gopls" },
--- 	capabilities = capabilities,
--- 	-- for postfix snippets and analyzers
--- 	settings = {
--- 		gopls = {
--- 			buildFlags = { "-tags=wireinject" },
--- 			experimentalPostfixCompletions = true,
--- 			analyses = {
--- 				unusedparams = true,
--- 				shadow = true,
--- 				nilness = true,
--- 				unusedwrite = true,
--- 				useany = true,
--- 			},
--- 			codelenses = {
--- 				gc_details = false,
--- 				generate = true,
--- 				regenerate_cgo = true,
--- 				run_govulncheck = true,
--- 				test = true,
--- 				tidy = true,
--- 				upgrade_dependency = true,
--- 				vendor = true,
--- 			},
--- 			staticcheck = true,
--- 			semanticTokens = true,
--- 			["ui.inlayhint.hints"] = {
--- 				compositeLiteralFields = true,
--- 				constantValues = true,
--- 				parameterNames = true,
--- 				functionTypeParameters = true,
--- 				compositeLiteralTypes = true,
--- 				assignVariableTypes = true,
--- 			},
--- 			directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
--- 			usePlaceholders = true,
--- 		},
--- 	},
--- 	on_attach = function(cl, bfrn)
--- 		local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
--- 		vim.api.nvim_create_autocmd("BufWritePre", {
--- 			pattern = "*.go",
--- 			callback = function()
--- 				require("go.format").goimports()
--- 			end,
--- 			group = format_sync_grp,
--- 		})
--- 		on_attach(cl, bfrn)
--- 	end,
--- })
+lsp.gopls.setup({
+	cmd = { "gopls" },
+	capabilities = capabilities,
+	-- for postfix snippets and analyzers
+	settings = {
+		gopls = {
+			experimentalPostfixCompletions = true,
+			analyses = {
+				unusedparams = true,
+				shadow = true,
+				nilness = true,
+				unusedwrite = true,
+				useany = true,
+			},
+			codelenses = {
+				gc_details = false,
+				generate = true,
+				regenerate_cgo = true,
+				run_govulncheck = true,
+				test = true,
+				tidy = true,
+				upgrade_dependency = true,
+				vendor = true,
+			},
+			staticcheck = true,
+			semanticTokens = true,
+			["ui.inlayhint.hints"] = {
+				compositeLiteralFields = true,
+				constantValues = true,
+				parameterNames = true,
+				functionTypeParameters = true,
+				compositeLiteralTypes = true,
+				assignVariableTypes = true,
+			},
+			directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
+			-- usePlaceholders = true,
+		},
+	},
+	on_attach = on_attach,
+})
 --
 -- lsp.golangci_lint_ls.setup{}
 
